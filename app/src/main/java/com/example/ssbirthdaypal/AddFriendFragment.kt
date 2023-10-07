@@ -1,59 +1,91 @@
 package com.example.ssbirthdaypal
 
+import android.R
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.example.ssbirthdaypal.databinding.FragmentAddFriendBinding
+import com.example.ssbirthdaypal.databinding.FragmentFirstBinding
+import com.example.ssbirthdaypal.models.Person
+import com.example.ssbirthdaypal.models.PersonsViewModel
+import com.google.firebase.auth.FirebaseAuth
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AddFriendFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AddFriendFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentAddFriendBinding? = null
+    private val binding get() = _binding!!
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
+    private val viewModel: PersonsViewModel by activityViewModels()
+
+    private val days = (1..31).map { it.toString() }
+    private val months = listOf(
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    )
+    private val years = (1900..2023).map { it.toString() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_friend, container, false)
+        _binding = FragmentAddFriendBinding.inflate(inflater, container, false)
+
+        val daySpinner = binding.spinnerDay
+        val monthSpinner = binding.spinnerMonth
+        val yearSpinner = binding.spinnerYear
+
+        // Create ArrayAdapter for each spinner
+        val dayAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, days)
+        val monthAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, months)
+        val yearAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, years)
+
+        // Set the dropdown view resource for each adapter
+        dayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        monthAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        yearAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+
+        daySpinner.adapter = dayAdapter
+        monthSpinner.adapter = monthAdapter
+        yearSpinner.adapter = yearAdapter
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AddFriendFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddFriendFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.errorMessageLiveData.observe(viewLifecycleOwner) { errorMessage ->
+            binding.textViewError.text = errorMessage
+        }
+
+        binding.buttonCancel.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.buttonAdd.setOnClickListener {
+            val name = binding.editTextName.text.toString().trim()
+            val remarks = binding.editTextRemark.text.toString().trim()
+            val selectedDay = binding.spinnerDay.selectedItem.toString().toInt()
+            val selectedMonth = (months.indexOf(binding.spinnerMonth.selectedItem.toString()) + 1)
+            val selectedYear = binding.spinnerYear.selectedItem.toString().toInt()
+
+            val personToAdd = Person(1, null, name, selectedYear, selectedMonth, selectedDay, remarks,null,null)
+
+            Log.d("button add", "add ${personToAdd.name}, ${personToAdd.birthYear}, ${personToAdd.birthMonth}, ${personToAdd.birthDayOfMonth}, remarks: ${personToAdd.remarks}")
+            viewModel.add(personToAdd)
+            findNavController().popBackStack()
+        }
     }
 }

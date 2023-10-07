@@ -8,6 +8,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class PersonsRepository {
     private val baseUrl = "https://birthdaysrest.azurewebsites.net/api/"
@@ -127,7 +130,6 @@ class PersonsRepository {
             }
         })
     }
-
 
 
 

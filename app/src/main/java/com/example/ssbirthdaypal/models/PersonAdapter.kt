@@ -56,24 +56,7 @@ class PersonAdapter (
             }
         }
 
-    private fun parseFlexibleDate(dateString: String): Date? {
-        val patterns = arrayOf("d M yyyy", "dd MM yyyy")
 
-        for (pattern in patterns) {
-            try {
-                val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
-                dateFormat.isLenient = false
-                val date = dateFormat.parse(dateString)
-                if (date != null) {
-                    return date
-                }
-            } catch (e: Exception) {
-                Log.d("parseDate", e.message.toString())
-            }
-        }
-
-        return null // Parsing failed
-    }
 
     private fun daysUntilNextBirthday(birthdate: Date?): Int {
         val currentDate = Calendar.getInstance()
@@ -91,5 +74,24 @@ class PersonAdapter (
         // Calculate the difference in days
         val timeInMillisUntilBirthday = birthdayCalendar.timeInMillis - currentDate.timeInMillis
         return ((timeInMillisUntilBirthday / (24 * 60 * 60 * 1000)) + 1).toInt()
+    }
+
+    fun parseFlexibleDate(dateString: String): Date? {
+        val patterns = arrayOf("d M yyyy", "dd MM yyyy")
+
+        for (pattern in patterns) {
+            try {
+                val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+                dateFormat.isLenient = false
+                val date = dateFormat.parse(dateString)
+                if (date != null) {
+                    return date
+                }
+            } catch (e: Exception) {
+                Log.d("parseDate", e.message.toString())
+            }
+        }
+
+        return null // Parsing failed
     }
 }
