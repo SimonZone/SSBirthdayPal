@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "373271602656",
+    "project_id": "ssbirthdaypal",
+    "storage_bucket": "ssbirthdaypal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373271602656:android:8ccfc56ee13d89df51f785",
+        "android_client_info": {
+          "package_name": "com.example.ssbirthdaypal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHUpIro3Hl8e8ZUmWnlH4GtGM3l0GsonA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
