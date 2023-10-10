@@ -77,7 +77,6 @@ class FirstFragment : Fragment() {
                     if (task.isSuccessful) {
                         Log.d("createUser success", "createUserWithEmail:success")
                         val user = auth.currentUser
-                        findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
                     } else {
                         Log.w("createUser failure", "createUserWithEmail:failure", task.exception)
                         binding.textviewMessage.text =

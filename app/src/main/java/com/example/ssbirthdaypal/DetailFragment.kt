@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.ssbirthdaypal.models.PersonsViewModel
 import com.example.ssbirthdaypal.databinding.FragmentDetailBinding
 import com.example.ssbirthdaypal.models.Person
+import com.google.firebase.auth.FirebaseAuth
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
@@ -18,6 +19,7 @@ class DetailFragment : Fragment() {
 
     private val viewModel: PersonsViewModel by activityViewModels()
 
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,7 +40,7 @@ class DetailFragment : Fragment() {
             return
         }
         binding.editTextName.setText(person.name)
-        binding.textviewAge.text = person.age.toString()
+        binding.editTextAge.setText(person.age.toString())
         binding.editTextDay.setText(person.birthDayOfMonth.toString())
         binding.editTextMonth.setText(person.birthMonth.toString())
         binding.editTextYear.setText(person.birthYear.toString())
@@ -57,7 +59,8 @@ class DetailFragment : Fragment() {
             val day = binding.editTextDay.text.toString().trim()
             val month = binding.editTextMonth.text.toString().trim()
             val year = binding.editTextYear.text.toString().trim()
-            val personToUpdate = Person(person.id, null, name, year.toInt(), month.toInt(), day.toInt(),null,null,null)
+            val remark = binding.editTextRemark.text.toString().trim()
+            val personToUpdate = Person(person.id, auth.currentUser!!.email, name, year.toInt(), month.toInt(), day.toInt(),remark,null,null)
 
             Log.d("detail update", "update ${personToUpdate.name}")
             viewModel.update(personToUpdate)

@@ -10,10 +10,14 @@ class PersonsViewModel : ViewModel() {
     val errorMessageLiveData: LiveData<String> = repository.errorMessageLiveData
     val updateMessageLiveData: LiveData<String> = repository.updateMessageLiveData
 
-    init { reload() }
+    //init { reload() }
 
     fun reload() {
         repository.getPersons()
+    }
+
+    fun reloadWithUser(email: String) {
+        repository.getPersonsByUserId(email)
     }
 
     operator fun get(index: Int): Person? {

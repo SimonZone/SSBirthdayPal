@@ -63,10 +63,10 @@ class SecondFragment : Fragment() {
             binding.textviewError.text = errorMessage
         }
 
-        viewModel.reload()
+        viewModel.reloadWithUser(auth.currentUser!!.email!!)
 
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.reload()
+            viewModel.reloadWithUser(auth.currentUser!!.email!!)
 
             binding.swipeRefresh.isRefreshing = false // TODO too early, ask gpt
         }

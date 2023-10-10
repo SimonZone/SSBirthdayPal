@@ -1,67 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".DetailFragment">
-
-    <TextView
-        android:id="@+id/textview_message"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <EditText
-        android:id="@+id/editText_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="name"
-        android:inputType="text"/>
+        <TextView
+            android:id="@+id/textview_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout_nameNAge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textview_age"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="age"
-        android:inputType="number"/>
+        <LinearLayout
+            android:id="@+id/linearLayout_nameNAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextLayout_day"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/editText_day"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="age"
-        android:inputType="number"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextLayout_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_marginRight="8dp">
 
-    <EditText
-        android:id="@+id/editText_month"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="age"
-        android:inputType="number"/>
+                <EditText
+                    android:id="@+id/editText_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name"
+                    android:inputType="text"
+                    android:minHeight="48dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/editText_year"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="age"
-        android:inputType="number"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextLayout_age"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_marginLeft="8dp">
 
-    <Button
-        android:id="@+id/button_back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/previous"/>
-    <Button
-        android:id="@+id/button_update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/update"/>
-    <Button
-        android:id="@+id/button_delete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/delete"/>
+                <EditText
+                    android:id="@+id/editText_age"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:hint="age"
+                    android:focusable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextLayout_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextLayout_month"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_nameNAge">
+
+            <EditText
+                android:id="@+id/editText_day"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/day"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:textAlignment="center" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextLayout_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/editTextLayout_year"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextLayout_day">
+
+            <EditText
+                android:id="@+id/editText_month"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/month"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:textAlignment="center" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextLayout_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/editTextLayout_remark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextLayout_month">
+
+            <EditText
+                android:id="@+id/editText_year"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/year"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:textAlignment="center" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextLayout_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout_buttons"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextLayout_year">
+
+            <EditText
+                android:id="@+id/editText_remark"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/remarks"
+                android:inputType="textMultiLine"
+                android:minLines="3" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_buttons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintWidth_default="wrap"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextLayout_remark">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_back"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/previous"
+                app:icon="@android:drawable/ic_input_add"
+                app:iconGravity="textEnd" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_update"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/update"
+                app:icon="@android:drawable/ic_menu_save"
+                app:iconGravity="textEnd" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_delete"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/delete"
+                android:backgroundTint="@color/design_default_color_error"
+                app:icon="@android:drawable/ic_delete"
+                app:iconGravity="textEnd" />
+        </LinearLayout>
 
 
 
-</LinearLayout>
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

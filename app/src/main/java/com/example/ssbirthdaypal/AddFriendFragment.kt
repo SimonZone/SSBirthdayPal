@@ -81,7 +81,7 @@ class AddFriendFragment : Fragment() {
             val selectedMonth = (months.indexOf(binding.spinnerMonth.selectedItem.toString()) + 1)
             val selectedYear = binding.spinnerYear.selectedItem.toString().toInt()
 
-            val personToAdd = Person(1, null, name, selectedYear, selectedMonth, selectedDay, remarks,null,null)
+            val personToAdd = Person(1, auth.currentUser!!.email, name, selectedYear, selectedMonth, selectedDay, remarks,null,null)
 
             Log.d("button add", "add ${personToAdd.name}, ${personToAdd.birthYear}, ${personToAdd.birthMonth}, ${personToAdd.birthDayOfMonth}, remarks: ${personToAdd.remarks}")
             viewModel.add(personToAdd)

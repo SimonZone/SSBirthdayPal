@@ -50,13 +50,34 @@ class PersonsRepository {
         })
     }
 
+    fun getPersonsByUserId(userId: String) {
+        personAPIService.getPersonsByUserId(userId).enqueue(object : Callback<List<Person>> {
+            override fun onResponse(call: Call<List<Person>>, response: Response<List<Person>>) {
+                if (response.isSuccessful){
+                    val p: List<Person>? = response.body()
+                    personsLiveData.postValue(p!!)
+                    errorMessageLiveData.postValue("")
+                    Log.d("getPersonsById http request", call.request().toString())
+                } else {
+                    val message = response.code().toString() + " " + response.message()
+                    errorMessageLiveData.postValue(message)
+                    Log.d("getPersonsById response", message)
+                }
+            }
+
+            override fun onFailure(call: Call<List<Person>>, t: Throwable) {
+                errorMessageLiveData.postValue(t.message)
+                Log.d("getPersonsById failure", t.message!!)
+            }
+        })
+    }
+
     fun add(person: Person) {
         personAPIService.addPerson(person).enqueue(object : Callback<Person> {
             override fun onResponse(call: Call<Person>, response: Response<Person>) {
                 if (response.isSuccessful) {
                     Log.d("add response", "Added: " + response.body())
                     updateMessageLiveData.postValue("Added: " + response.body())
-                    getPersons()
                 } else {
                     val message = response.code().toString() + " " + response.message()
                     errorMessageLiveData.postValue(message)
