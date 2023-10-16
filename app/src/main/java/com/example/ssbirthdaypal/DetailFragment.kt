@@ -44,6 +44,7 @@ class DetailFragment : Fragment() {
         binding.editTextDay.setText(person.birthDayOfMonth.toString())
         binding.editTextMonth.setText(person.birthMonth.toString())
         binding.editTextYear.setText(person.birthYear.toString())
+        binding.editTextRemark.setText(person.remarks.toString())
 
         binding.buttonBack.setOnClickListener {
             findNavController().popBackStack()

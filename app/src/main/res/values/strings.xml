@@ -20,4 +20,11 @@
     <string name="month">Month</string>
     <string name="year">Year</string>
     <string name="login">Log in</string>
+    <string name="filterAndSorting">filterAndSorting</string>
+    <string name="search">search</string>
+    <string name="filter_and_sorting">Filter and sorting</string>
+    <string name="sort_name_by">Sort name by</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+    <string name="filter_by">Filter by</string>
 </resources>

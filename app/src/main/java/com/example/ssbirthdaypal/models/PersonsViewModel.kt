@@ -36,6 +36,14 @@ class PersonsViewModel : ViewModel() {
         repository.update(person)
     }
 
+    fun sortAndFilter(
+        sortCriteria: String? = null,
+        descending: Boolean = false,
+        filterCriteria: Int? = null,
+        filterSearch: String? = null
+    )  {
+        repository.sortAndFilter(sortCriteria, descending, filterCriteria, filterSearch)
+    }
 
 
 }

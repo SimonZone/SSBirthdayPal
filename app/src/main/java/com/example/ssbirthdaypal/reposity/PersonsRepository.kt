@@ -8,9 +8,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class PersonsRepository {
     private val baseUrl = "https://birthdaysrest.azurewebsites.net/api/"
@@ -152,6 +149,43 @@ class PersonsRepository {
         })
     }
 
+    fun sortAndFilter(
+        sortCriteria: String? = null,
+        descending: Boolean = false,
+        filterCriteria: Int? = null,
+        filterSearch: String? = null
+    ) {
+        val currentData = personsLiveData.value ?: return // If data is null, return
 
+        // Apply sorting if sort criteria is provided
+        val sortedData = sortData(currentData, sortCriteria, descending)
 
+        // Apply filtering if filter criteria and value are provided
+        val filteredData = filterData(sortedData, filterCriteria, filterSearch)
+
+        // Update the LiveData with the sorted and filtered data
+        personsLiveData.value = filteredData
+    }
+
+    private fun sortData(data: List<Person>, sortCriteria: String?, descending: Boolean): List<Person> {
+        return when (sortCriteria) {
+            "Name" -> if (descending) data.sortedByDescending { it.name } else data.sortedBy { it.name }
+            "Age" -> if (descending) data.sortedByDescending { it.age } else data.sortedBy { it.age }
+            "Day" -> if (descending) data.sortedByDescending { it.birthDayOfMonth } else data.sortedBy { it.birthDayOfMonth }
+            "Month" -> if (descending) data.sortedByDescending { it.birthMonth } else data.sortedBy { it.birthMonth }
+            "Year" -> if (descending) data.sortedByDescending { it.birthYear } else data.sortedBy { it.birthYear }
+            else -> data // Default sorting
+        }
+    }
+
+    private fun filterData(data: List<Person>, filterCriteria: Int?, filterSearch: String?): List<Person> {
+        return when (filterCriteria) {
+            1 -> data.filter { it.name.contains(filterSearch ?: "", ignoreCase = true) }
+            2 -> data.filter { it.age.toString().contains(filterSearch ?: "") }
+            3 -> data.filter { it.birthDayOfMonth.toString().contains(filterSearch ?: "") }
+            4 -> data.filter { it.birthMonth.toString().contains(filterSearch ?: "") }
+            5 -> data.filter { it.birthYear.toString().contains(filterSearch ?: "") }
+            else -> data // Default filtering (no filter)
+        }
+    }
 }

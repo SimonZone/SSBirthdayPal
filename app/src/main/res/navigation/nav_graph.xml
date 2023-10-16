@@ -49,4 +49,9 @@
             android:id="@+id/action_addFriendFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/filterAndSortDialogFragment"
+        android:name="com.example.ssbirthdaypal.FilterAndSortDialogFragment"
+        android:label="fragment_filter_and_sort_dialog_list_dialog"
+        tools:layout="@layout/fragment_filter_and_sort_dialog_list_dialog" />
 </navigation>
