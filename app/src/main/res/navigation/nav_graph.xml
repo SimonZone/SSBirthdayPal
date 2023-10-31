@@ -34,8 +34,9 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.ssbirthdaypal.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        android:label="Friend details"
+        tools:layout="@layout/fragment_detail">
+        <!--suppress NavigationFile -->
         <argument
             android:name="position"
             app:argType="integer" />
@@ -43,15 +44,10 @@
     <fragment
         android:id="@+id/addFriendFragment"
         android:name="com.example.ssbirthdaypal.AddFriendFragment"
-        android:label="fragment_add_friend"
-        tools:layout="@layout/fragment_add_friend" >
+        android:label="Add friend"
+        tools:layout="@layout/fragment_add_friend">
         <action
             android:id="@+id/action_addFriendFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/filterAndSortDialogFragment"
-        android:name="com.example.ssbirthdaypal.FilterAndSortDialogFragment"
-        android:label="fragment_filter_and_sort_dialog_list_dialog"
-        tools:layout="@layout/fragment_filter_and_sort_dialog_list_dialog" />
 </navigation>

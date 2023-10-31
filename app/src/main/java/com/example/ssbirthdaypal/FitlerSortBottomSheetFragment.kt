@@ -22,15 +22,17 @@ class FilterSortBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         inflater.inflate(R.layout.bottom_sheet_layout, container, false)
         _binding = BottomSheetLayoutBinding.inflate(inflater, container, false)
-        val filterSpinner = binding.spinnerFilterValue
+        val filterSpinner = binding.spinnerFilterBy
+        val sortSpinner = binding.spinnerSortBy
         // Create ArrayAdapter for each spinner
         val filterAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, filters)
         // Set the dropdown view resource for each adapter
         filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         filterSpinner.adapter = filterAdapter
+        sortSpinner.adapter = filterAdapter
 
         return binding.root
     }
@@ -41,17 +43,17 @@ class FilterSortBottomSheetFragment : BottomSheetDialogFragment() {
         binding.bottomApply.setOnClickListener {
 
             // Get user selections and apply filtering and sorting here
-            val sortSearch = binding.editTextSortSearch.text.toString()
-            Log.d("Bottom apply", sortSearch)
+            val sortBy = binding.spinnerSortBy.selectedItemPosition + 1
+            Log.d("Bottom apply", "$sortBy")
             val descending = binding.chipSortDescending.isChecked
             Log.d("Bottom apply", "$descending")
-            val filterType = (filters.indexOf(binding.spinnerFilterValue.selectedItemPosition.toString()) + 1)
+            val filterType = binding.spinnerFilterBy.selectedItemPosition + 1
             Log.d("Bottom apply", "$filterType")
             val filterSearch = binding.editTextFilterSearch.text.toString()
             Log.d("Bottom apply", filterSearch)
-            Log.d("Bottom apply", "$sortSearch, $descending, $filterType, $filterSearch")
+            Log.d("Bottom apply", "$sortBy, $descending, $filterType, $filterSearch")
             // Apply sorting and filtering to your data based on user selections
-            viewModel.sortAndFilter(sortSearch, descending, filterType, filterSearch)
+            viewModel.sortAndFilter(sortBy, descending, filterType, filterSearch)
 
             // Dismiss the bottom sheet
             dismiss()

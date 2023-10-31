@@ -22,11 +22,9 @@ class FirstFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,7 +47,6 @@ class FirstFragment : Fragment() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("signIn success", "signInWithEmailAndPassword:success")
-                        val user = auth.currentUser
                         findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
                     } else {
                         // If sign in fails, display a message to the user.
@@ -76,7 +73,6 @@ class FirstFragment : Fragment() {
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
                         Log.d("createUser success", "createUserWithEmail:success")
-                        val user = auth.currentUser
                     } else {
                         Log.w("createUser failure", "createUserWithEmail:failure", task.exception)
                         binding.textviewMessage.text =

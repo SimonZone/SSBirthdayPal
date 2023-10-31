@@ -39,7 +39,6 @@ class PersonAdapter (
         viewHolder.textViewBody.text = daysTil.toString()
     }
 
-
     class MyViewHolder(itemView: View, private val onItemClicked: (position: Int) -> Unit) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
             val textViewTitle: TextView = itemView.findViewById(R.id.textview_list_item_title)
@@ -58,7 +57,7 @@ class PersonAdapter (
 
 
 
-    private fun daysUntilNextBirthday(birthdate: Date?): Int {
+    private fun daysUntilNextBirthday(birthdate: Date): Int {
         val currentDate = Calendar.getInstance()
         val birthdayCalendar = Calendar.getInstance()
         birthdayCalendar.time = birthdate
@@ -76,7 +75,7 @@ class PersonAdapter (
         return ((timeInMillisUntilBirthday / (24 * 60 * 60 * 1000)) + 1).toInt()
     }
 
-    fun parseFlexibleDate(dateString: String): Date? {
+    private fun parseFlexibleDate(dateString: String): Date {
         val patterns = arrayOf("d M yyyy", "dd MM yyyy")
 
         for (pattern in patterns) {
@@ -92,6 +91,6 @@ class PersonAdapter (
             }
         }
 
-        return null // Parsing failed
+        return Date()  // Parsing failed
     }
 }

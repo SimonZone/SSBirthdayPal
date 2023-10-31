@@ -18,30 +18,27 @@
         android:textAppearance="?textAppearanceTitleLarge"
         android:textAlignment="center" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp"
-        app:endIconMode="clear_text"
-        app:startIconDrawable="@android:drawable/ic_menu_search">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_sortSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/search"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:lines="1" />
-
-    </com.google.android.material.textfield.TextInputLayout>
     <TextView
-        android:id="@+id/textView_sortBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginLeft="16dp"
-        android:text="@string/sort_name_by"
+        android:layout_marginStart="16dp"
+        android:text="Sort by"
+        android:textAppearance="?textAppearanceLabelLarge" />
+    <Spinner
+        android:id="@+id/spinner_sortBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:text="Sort "
         android:textAppearance="?textAppearanceLabelLarge" />
 
     <LinearLayout
@@ -87,17 +84,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:text="@string/filter_by"
             android:textAppearance="?textAppearanceLabelLarge" />
 
     <Spinner
-        android:id="@+id/spinner_filterValue"
+        android:id="@+id/spinner_filterBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
         android:layout_marginTop="4dp"
-        android:layout_marginLeft="16dp"/>
+        android:layout_marginStart="16dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

@@ -26,27 +26,6 @@ class PersonsRepository {
 
     }
 
-    fun getPersons() {
-        personAPIService.getAllPersons().enqueue(object : Callback<List<Person>> {
-            override fun onResponse(call: Call<List<Person>>, response: Response<List<Person>>) {
-                if (response.isSuccessful){
-                    val p: List<Person>? = response.body()
-                    personsLiveData.postValue(p!!)
-                    errorMessageLiveData.postValue("")
-                } else {
-                    val message = response.code().toString() + " " + response.message()
-                    errorMessageLiveData.postValue(message)
-                    Log.d("getPersons response", message)
-                }
-            }
-
-            override fun onFailure(call: Call<List<Person>>, t: Throwable) {
-                errorMessageLiveData.postValue(t.message)
-                Log.d("getPersons failure", t.message!!)
-            }
-        })
-    }
-
     fun getPersonsByUserId(userId: String) {
         personAPIService.getPersonsByUserId(userId).enqueue(object : Callback<List<Person>> {
             override fun onResponse(call: Call<List<Person>>, response: Response<List<Person>>) {
@@ -109,26 +88,6 @@ class PersonsRepository {
         })
     }
 
-    fun getById(id: Int) {
-        personAPIService.getPersonById(id).enqueue(object : Callback<Person> {
-            override fun onResponse(call: Call<Person>, response: Response<Person>) {
-                if (response.isSuccessful) {
-                    Log.d("getById response", "Got: " + response.body())
-                    updateMessageLiveData.postValue("Got: " + response.body())
-                } else {
-                    val message = response.code().toString() + " " + response.message()
-                    errorMessageLiveData.postValue(message)
-                    Log.d("getById response", message)
-                }
-            }
-
-            override fun onFailure(call: Call<Person>, t: Throwable) {
-                errorMessageLiveData.postValue(t.message)
-                Log.d("getById failure", t.message!!)
-            }
-        })
-    }
-
     fun update(person: Person) {
         personAPIService.updatePerson(person.id, person).enqueue(object : Callback<Person> {
             override fun onResponse(call: Call<Person>, response: Response<Person>) {
@@ -150,9 +109,9 @@ class PersonsRepository {
     }
 
     fun sortAndFilter(
-        sortCriteria: String? = null,
+        sortCriteria: Int,
         descending: Boolean = false,
-        filterCriteria: Int? = null,
+        filterCriteria: Int,
         filterSearch: String? = null
     ) {
         val currentData = personsLiveData.value ?: return // If data is null, return
@@ -167,18 +126,18 @@ class PersonsRepository {
         personsLiveData.value = filteredData
     }
 
-    private fun sortData(data: List<Person>, sortCriteria: String?, descending: Boolean): List<Person> {
+    private fun sortData(data: List<Person>, sortCriteria: Int, descending: Boolean): List<Person> {
         return when (sortCriteria) {
-            "Name" -> if (descending) data.sortedByDescending { it.name } else data.sortedBy { it.name }
-            "Age" -> if (descending) data.sortedByDescending { it.age } else data.sortedBy { it.age }
-            "Day" -> if (descending) data.sortedByDescending { it.birthDayOfMonth } else data.sortedBy { it.birthDayOfMonth }
-            "Month" -> if (descending) data.sortedByDescending { it.birthMonth } else data.sortedBy { it.birthMonth }
-            "Year" -> if (descending) data.sortedByDescending { it.birthYear } else data.sortedBy { it.birthYear }
+            1 -> if (descending) data.sortedByDescending { it.name } else data.sortedBy { it.name }
+            2 -> if (descending) data.sortedByDescending { it.age } else data.sortedBy { it.age }
+            3 -> if (descending) data.sortedByDescending { it.birthDayOfMonth } else data.sortedBy { it.birthDayOfMonth }
+            4 -> if (descending) data.sortedByDescending { it.birthMonth } else data.sortedBy { it.birthMonth }
+            5 -> if (descending) data.sortedByDescending { it.birthYear } else data.sortedBy { it.birthYear }
             else -> data // Default sorting
         }
     }
 
-    private fun filterData(data: List<Person>, filterCriteria: Int?, filterSearch: String?): List<Person> {
+    private fun filterData(data: List<Person>, filterCriteria: Int, filterSearch: String?): List<Person> {
         return when (filterCriteria) {
             1 -> data.filter { it.name.contains(filterSearch ?: "", ignoreCase = true) }
             2 -> data.filter { it.age.toString().contains(filterSearch ?: "") }

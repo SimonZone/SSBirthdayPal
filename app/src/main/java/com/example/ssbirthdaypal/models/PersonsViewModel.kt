@@ -8,13 +8,6 @@ class PersonsViewModel : ViewModel() {
     private val repository = PersonsRepository()
     val personsLiveData: LiveData<List<Person>> = repository.personsLiveData
     val errorMessageLiveData: LiveData<String> = repository.errorMessageLiveData
-    val updateMessageLiveData: LiveData<String> = repository.updateMessageLiveData
-
-    //init { reload() }
-
-    fun reload() {
-        repository.getPersons()
-    }
 
     fun reloadWithUser(email: String) {
         repository.getPersonsByUserId(email)
@@ -37,9 +30,9 @@ class PersonsViewModel : ViewModel() {
     }
 
     fun sortAndFilter(
-        sortCriteria: String? = null,
+        sortCriteria: Int,
         descending: Boolean = false,
-        filterCriteria: Int? = null,
+        filterCriteria: Int,
         filterSearch: String? = null
     )  {
         repository.sortAndFilter(sortCriteria, descending, filterCriteria, filterSearch)
